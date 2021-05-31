@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  db:
+    image: mongo
+    ports:
+      - "27018:27017"
+    restart: always
+
+  server:
+    build:
+      context: ./server
+      target: dev
+    volumes:
+      - ./server:/server/
+    command: npm run start:dev
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: mongodb://db:27017/tp?authSource=admin
+      NODE_ENV: development
+      DEBUG: server:*
+    depends_on:
+      - db
+
+  client:
+    build: ./client
+    command: npm start
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
