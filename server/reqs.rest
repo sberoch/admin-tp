@@ -1,0 +1,14 @@
+GET http://localhost:5000/rescuers
+
+###
+
+POST http://localhost:5000/rescuers
+Content-Type: application/json
+
+{
+  "name": "asd",
+  "birthdate": "10-10-1998",
+  "email": "asd", 
+  "country": "asd", 
+  "address": "asd"
+}
