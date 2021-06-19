@@ -6,6 +6,8 @@ var logger = require('morgan');
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const middleware = require('./middleware');
+var cors = require('cors');
+
 var app = express();
 
 const swaggerOptions = {
@@ -33,6 +35,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
