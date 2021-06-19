@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-
+const middleware = require('./middleware');
 var app = express();
 
 const swaggerOptions = {
@@ -38,8 +38,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(middleware);
+
 var petsRoutes = require('./routes/pet');
 var rescuerRoutes = require('./routes/rescuer')
+
+// Route
 app.use('/pets', petsRoutes);
 app.use('/rescuers', rescuerRoutes);
 
