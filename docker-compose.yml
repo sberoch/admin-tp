@@ -19,6 +19,8 @@ services:
       DATABASE_URL: mongodb://db:27017/tp?authSource=admin
       NODE_ENV: development
       DEBUG: server:*
+    env_file:
+        - ./server/.env.local
     depends_on:
       - db
 
