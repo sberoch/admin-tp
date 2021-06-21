@@ -10,6 +10,10 @@ import { useHistory } from "react-router";
 
 import api from '../network/axios'
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
+import { useAuth } from '../contexts/AuthContext'
+
+const RESCATISTA = 'Rescatista'
+const ADOPTANTE = 'ADOPTANTE'
 
 const validationSchema = yup.object({
   email: yup
@@ -45,7 +49,7 @@ export default function Signup() {
       country: '',
       address: '',
       password: '',
-      role: 'Adoptante'
+      role: ''
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -55,33 +59,43 @@ export default function Signup() {
 
   const history = useHistory();
   const [avatar, setAvatar] = useState();
+  const { signup } = useAuth()  //Se pueden agregar login, logout, currentUser 
 
   const handleFileSelection = (e) => {
     setAvatar(e.target.files[0])
   }
 
-  const handleSignup = async (user) => {
-    let formData = new FormData()
-    formData.append("email", user.email)
-    formData.append("name", user.name)
-    formData.append("birthdate", user.birthdate)
-    formData.append("country", user.country)
-    formData.append("address", user.address)
-    formData.append("password", user.password)
-    formData.append("avatar", avatar, avatar.name)
-    console.log(formData)
+  const handleSignup = async (data) => {
+    // let formData = new FormData()
+    // formData.append("email", user.email)
+    // formData.append("name", user.name)
+    // formData.append("birthdate", user.birthdate)
+    // formData.append("country", user.country)
+    // formData.append("address", user.address)
+    // formData.append("role", user.role)
+    // formData.append("password", user.password)
+    //formData.append("avatar", avatar, avatar.name)
+    // headers: {
+    //   'content-type': 'multipart/form-data'
+    // }
 
     try {
-      const res = await api.post(`api/auth/register`, formData, {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      })
-      console.log(res)
-      localStorage.setItem("token", res.data.accessToken)
-      history.push('/')
-    } catch {
-      console.log("Error")
+      const {email, name, birthdate, country, address, password, role} = data 
+  
+      if (role === RESCATISTA) {
+        //Firebase
+        const firebase_res = await signup(email, password) //login against firebase
+        const token = await firebase_res.user.getIdToken(); 
+        localStorage.setItem("token", token) //save id token in localStorage
+
+        //Al back
+        const back_res = await api.post(`/rescuers`, {
+          email, name, birthdate, country, address
+        })
+      }
+      //history.push('/')
+    } catch (error){
+      console.log(error)
     }
   }
   
@@ -189,8 +203,8 @@ export default function Signup() {
             error={formik.touched.role && Boolean(formik.errors.role)}
             helperText={formik.touched.role && formik.errors.role}
           >
-            <MenuItem value={10}>Adoptante</MenuItem>
-            <MenuItem value={20}>Rescatista</MenuItem>
+            <MenuItem value={"Adoptante"}>Adoptante</MenuItem>
+            <MenuItem value={"Rescatista"}>Rescatista</MenuItem>
           </Select>
         </Grid>
 

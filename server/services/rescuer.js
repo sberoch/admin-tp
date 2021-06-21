@@ -1,5 +1,9 @@
 const { Rescuer } = require('../models')
 
+function handleError(err) {
+  console.log(err);
+}
+
 class RescuerService {
   async findAll() {
     try {
@@ -24,7 +28,7 @@ class RescuerService {
       const rescuer = await Rescuer.create(rescuerDTO);
       return rescuer;
     } catch (err) {
-      handleError(err)
+      console.log(err);
     }
   }
 }
