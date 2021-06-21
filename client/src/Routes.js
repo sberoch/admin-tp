@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-d
 import Test from './components/Test'
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import AddPet from "./pages/AddPet";
 
 function Routes() {
   return (
@@ -10,6 +11,7 @@ function Routes() {
         <Route exact path="/" component={Test} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/addPet" component={AddPet} />
       </Switch>
     </Router>
   );

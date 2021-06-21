@@ -24,7 +24,7 @@ class PetService {
       const pet = await Pet.create(petDTO);
       return pet;
     } catch (err) {
-      handleError(err)
+      console.log(err)
     }
   }
 }

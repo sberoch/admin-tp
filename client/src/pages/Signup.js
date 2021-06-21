@@ -225,7 +225,7 @@ export default function Signup() {
         <Grid item xs={10}>
           <Link to='/login'>
             <Button color="primary" style={{textTransform: 'none'}}>
-              多Ya tenes una cuenta? Ingresar
+              ¿Ya tenes una cuenta? Ingresar
             </Button>
           </Link>
         </Grid>
