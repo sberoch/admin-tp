@@ -1,5 +1,9 @@
 const { Pet } = require('../models')
 
+function handleError(err) {
+  console.log(err);
+}
+
 class PetService {
   async findAll() {
     try {
@@ -24,7 +28,7 @@ class PetService {
       const pet = await Pet.create(petDTO);
       return pet;
     } catch (err) {
-      handleError(err)
+      console.log(err);
     }
   }
 }
