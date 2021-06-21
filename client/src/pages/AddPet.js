@@ -39,22 +39,13 @@ export default function AddPet() {
     },
   });
   
-  const handleSubmit = async (pet) => {
-    let formData = new FormData()
-    formData.append("name", pet.name)
-    formData.append("species", pet.specie)
-    formData.append("breed", pet.breed)
-    formData.append("description", pet.description)
-    console.log(formData)
+  const handleSubmit = async (data) => {
+
+    const {name, species, breed, description} = data
 
     try {
-      const res = await api.post(`/pets`, formData, {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      })
+      const res = await api.post(`/pets`, {name, species, description})
       console.log(res)
-      // localStorage.setItem("token", res.data.accessToken)
       history.push('/')
     } catch {
       console.log("Error")
