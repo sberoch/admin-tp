@@ -10,12 +10,13 @@ services:
 
   server:
     build:
+      target: dev
       context: ./server
       dockerfile: Dockerfile
-      target: dev
     
     volumes:
-      - ./server:/server/
+      - './server:/server'
+      - '/server/node_modules'
     
     ports:
       - "5000:5000"
