@@ -3,15 +3,17 @@ import Test from './components/Test'
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AddPet from "./pages/AddPet";
+import Home from "./pages/Home";
 
 function Routes() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Test} />
+        <Route exact path="/" component={Login} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/addPet" component={AddPet} />
+        <PrivateRoute path="/addPet" component={AddPet} />
+        <PrivateRoute path="/home" component={Home} />
       </Switch>
     </Router>
   );

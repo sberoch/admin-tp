@@ -66,18 +66,6 @@ export default function Signup() {
   }
 
   const handleSignup = async (data) => {
-    // let formData = new FormData()
-    // formData.append("email", user.email)
-    // formData.append("name", user.name)
-    // formData.append("birthdate", user.birthdate)
-    // formData.append("country", user.country)
-    // formData.append("address", user.address)
-    // formData.append("role", user.role)
-    // formData.append("password", user.password)
-    //formData.append("avatar", avatar, avatar.name)
-    // headers: {
-    //   'content-type': 'multipart/form-data'
-    // }
 
     try {
       const {email, name, birthdate, country, address, password, role} = data 
@@ -92,8 +80,8 @@ export default function Signup() {
         const back_res = await api.post(`/rescuers`, {
           email, name, birthdate, country, address
         })
+        history.push('/home')
       }
-      //history.push('/')
     } catch (error){
       console.log(error)
     }

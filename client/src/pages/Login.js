@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import { Link } from "react-router-dom";
-// import { useHistory } from "react-router";
+import { useHistory } from "react-router";
 import { useAuth } from '../contexts/AuthContext'
 import AlertMessage from '../components/AlertMessage'
 
@@ -25,7 +25,7 @@ export default function LoginForm() {
   const { login } = useAuth()
   const [ openedAlert, setOpenedAlert ] = useState(false)
   const [ messageAlert, setMessageAlert ] = useState("")
-  // const history = useHistory();
+  const history = useHistory();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -37,11 +37,11 @@ export default function LoginForm() {
     },
   });
 
-  const handleSubmit = async (values) => {
-    console.log("ASdddd")
-    login(values.email, values.password).then((userCredential) => {
-      const token = userCredential.user.getIdToken(); 
+  const handleSubmit = (values) => {
+    login(values.email, values.password).then(async (userCredential) => {
+      const token = await userCredential.user.getIdToken(); 
       localStorage.setItem("token", token) // save id token in localStorage
+      history.push('/home')
     })
     .catch((error) => {
       // var errorCode = error.code;

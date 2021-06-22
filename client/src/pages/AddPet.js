@@ -46,7 +46,7 @@ export default function AddPet() {
     try {
       const res = await api.post(`/pets`, {name, species, description})
       console.log(res)
-      history.push('/')
+      history.push('/home')
     } catch {
       console.log("Error")
     }
@@ -142,8 +142,7 @@ export default function AddPet() {
                 size="large"
                 color="secondary" 
                 variant="contained" 
-                
-                type="submit"
+                onClick={() => history.push('/home')}
               >
               Cancelar
               </Button>
