@@ -1,4 +1,4 @@
-const { Rescuer } = require('../models')
+const { Adopter } = require('../models')
 
 function handleError(err) {
   console.log(err);
