@@ -14,7 +14,7 @@ import { InputLabel, MenuItem, Select } from '@material-ui/core';
 import { useAuth } from '../contexts/AuthContext'
 
 const RESCATISTA = 'Rescatista'
-const ADOPTANTE = 'ADOPTANTE'
+const ADOPTANTE = 'Adoptante'
 
 const validationSchema = yup.object({
   email: yup
@@ -70,18 +70,20 @@ export default function Signup() {
 
     try {
       const {email, name, birthdate, country, address, password, role} = data 
-  
-      if (role === RESCATISTA) {
-        //Firebase
-        const firebase_res = await signup(email, password) //login against firebase
-        const token = await firebase_res.user.getIdToken(); 
-        localStorage.setItem("token", token) //save id token in localStorage
 
-        //Al back
-        const back_res = await api.post(`/rescuers`, {
+      const firebase_res = await signup(email, password); //login against firebase
+      const token = await firebase_res.user.getIdToken(); 
+      localStorage.setItem("token", token); //save id token in localStorage
+  
+      if (role === RESCATISTA) { 
+        await api.post(`/rescuers`, {
           email, name, birthdate, country, address
-        })
+        });
         history.push('/home')
+      } else {
+        await api.post(`/adopters`, {
+          email, name, birthdate, country, address
+        });
       }
     } catch (error){
       console.log(error)
@@ -193,8 +195,8 @@ export default function Signup() {
               error={formik.touched.role && Boolean(formik.errors.role)}
               helperText={formik.touched.role && formik.errors.role}
             >
-              <MenuItem value={"Adoptante"}>Adoptante</MenuItem>
-              <MenuItem value={"Rescatista"}>Rescatista</MenuItem>
+              <MenuItem value={ADOPTANTE}>Adoptante</MenuItem>
+              <MenuItem value={RESCATISTA}>Rescatista</MenuItem>
             </Select>
           </Grid>
 

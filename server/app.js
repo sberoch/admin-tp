@@ -41,19 +41,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-var rescuerRoutes = require('./routes/rescuer')
+var rescuerRoutes = require('./routes/rescuer');
+var adopterRoutes = require('./routes/adopter');
+
 app.use('/rescuers', rescuerRoutes);
+app.use('/adopters', adopterRoutes);
 
 if (!process.env.NODE_ENV == 'development') {
   app.use(middleware);
 }
 
-var petsRoutes = require('./routes/pet');
-
-
 // Route
+var petsRoutes = require('./routes/pet');
 app.use('/pets', petsRoutes);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
