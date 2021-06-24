@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const adopter = mongoose.Schema({
+const adopterSchema = mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Se requiere un nombre para el adoptante'],
@@ -24,6 +24,6 @@ const adopter = mongoose.Schema({
 },
 { timestamps: true });
 
-const Rescuer = mongoose.model('Rescuer', rescuerSchema)
+const adopter = mongoose.model('Adopter', adopterSchema)
 
-module.exports = Rescuer;
+module.exports = adopter;
