@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const RescuerService = require('../services/rescuer')
 var createError = require('http-errors');
+
+const RescuerService = require('../services/rescuer')
 
 router.get('/', async (req, res, next) => {
   const rescuers = await RescuerService.findAll(req.query)
