@@ -4,7 +4,7 @@ function handleError(err) {
   console.log(err);
 }
 
-class RescuerService {
+class AdopterService {
   async findAll() {
     try {
       const adopters = await Adopter.find({})
@@ -25,7 +25,7 @@ class RescuerService {
 
   async create(adopterDTO) {
     try {
-      const adopter = await Adopter.create(rescuerDTO);
+      const adopter = await Adopter.create(adopterDTO);
       return adopter;
     } catch (err) {
       handleError(err);
@@ -33,5 +33,5 @@ class RescuerService {
   }
 }
 
-const rescuerService = new RescuerService()
-module.exports = rescuerService;
+const adopterService = new AdopterService()
+module.exports = adopterService;
