@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
-import Test from './components/Test'
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AddPet from "./pages/AddPet";
@@ -14,7 +13,8 @@ function Routes() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <PrivateRoute path="/addPet" component={AddPet} />
-        
+      
+        {/*TODO -> hacer que user tenga acceso a su rol*/}
         <PrivateRoute path="/homeAdopter" component={HomeAdopter} />
         <PrivateRoute path="/homeRescuer" component={HomeRescuer} />
       </Switch>
@@ -30,7 +30,6 @@ const PrivateRoute = ({ component: Component, ...rest}) => (
         <Component {...props} />
       ) : (
         <Redirect to={{pathname: "/login", state: { from: props.location }}} />
-        
       )
     }
   />

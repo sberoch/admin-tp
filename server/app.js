@@ -1,14 +1,33 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const swaggerJsDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
-const middleware = require('./middleware');
-var cors = require('cors');
+//------------------------------app------------------------------//
+let express = require('express');
+const app = express();
 
-var app = express();
+let cors = require('cors');
+let logger = require('morgan');
+let createError = require('http-errors');
+const middleware = require('./middleware');
+let cookieParser = require('cookie-parser');
+
+app.use(cors());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
+//----------------------------------------------------------------//
+
+
+//----------------------PUBLIC-ROUTES-----------------------------//
+const {usersRoutes, rescuersRoutes, adoptersRoutes} = require('./routes');
+
+app.use('/users', usersRoutes);
+app.use('/rescuers', rescuersRoutes);
+app.use('/adopters', adoptersRoutes);
+//----------------------------------------------------------------//
+
+
+//---------------------------swagger------------------------------//
+let swaggerJsDoc = require("swagger-jsdoc");
+let swaggerUi = require("swagger-ui-express");
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -34,28 +53,17 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+//----------------------------------------------------------------//
 
-app.use(cors());
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
-var usersRouter = require('./routes/user');
-var rescuerRoutes = require('./routes/rescuer');
-var adopterRoutes = require('./routes/adopter');
+//-----------------------------ROUTES-----------------------------//
+if (!process.env.NODE_ENV == 'development') app.use(middleware);
 
-app.use('/users', usersRouter);
-app.use('/rescuers', rescuerRoutes);
-app.use('/adopters', adopterRoutes);
+const { petsRoutes } = require('./routes');
 
-if (!process.env.NODE_ENV == 'development') {
-  app.use(middleware);
-}
-
-// Route
-var petsRoutes = require('./routes/pet');
 app.use('/pets', petsRoutes);
+//----------------------------------------------------------------//
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
