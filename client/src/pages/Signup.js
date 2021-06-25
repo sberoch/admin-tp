@@ -119,6 +119,9 @@ export default function Signup() {
             <TextField
               fullWidth
               variant="outlined"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              inputProps={{ min: "2019-01-24", max: "2020-05-31" }}
               id="birthdate"
               name="birthdate"
               label="Fecha de nacimiento"
