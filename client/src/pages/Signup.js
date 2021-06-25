@@ -28,7 +28,7 @@ const validationSchema = yup.object({
     .string('Ingresa tu nombre')
     .required('Se requiere tu nombre'),
   birthdate: yup
-    .data('Ingresa tu fecha de nacimiento')
+    .date('Ingresa tu fecha de nacimiento')
     .required('Se requiere fecha de nacimiento'),
   country: yup
     .string('Ingresa tu pais')
