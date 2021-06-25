@@ -7,11 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-import {Theme} from '../theme/appTheme'
+import {Theme} from '../theme/appTheme';
 import { ThemeProvider } from '@material-ui/core/styles';
-import api from '../network/axios'
+import api from '../network/axios';
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../contexts/AuthContext';
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
 
 const RESCATISTA = 'Rescatista'
 const ADOPTANTE = 'Adoptante'
@@ -25,7 +27,7 @@ const validationSchema = yup.object({
     .string('Ingresa tu nombre')
     .required('Se requiere tu nombre'),
   birthdate: yup
-    .string('Ingresa tu fecha de nacimiento')
+    .data('Ingresa tu fecha de nacimiento')
     .required('Se requiere fecha de nacimiento'),
   country: yup
     .string('Ingresa tu pais')
@@ -37,8 +39,8 @@ const validationSchema = yup.object({
     .string('Ingresa un rol')
     .required('Se requiere un rol'),
   password: yup
-    .string('Ingresa tu contase単a')
-    .required('Se requiere una contase単a'),
+    .string('Ingresa tu contaseña')
+    .required('Se requiere una contaseña'),
 });
 
 export default function Signup() {
@@ -129,17 +131,7 @@ export default function Signup() {
             />
           </Grid>
           <Grid item xs={10}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              id="birthdate"
-              name="birthdate"
-              label="Fecha de nacimiento"
-              value={formik.values.birthdate}
-              onChange={formik.handleChange}
-              error={formik.touched.birthdate && Boolean(formik.errors.birthdate)}
-              helperText={formik.touched.birthdate && formik.errors.birthdate}
-            />
+            <DatePicker/>
           </Grid>
           <Grid item xs={10}>
             <TextField
