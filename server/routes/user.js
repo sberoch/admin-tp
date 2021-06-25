@@ -9,9 +9,9 @@ router.get('/', async (req, res, next) => {
   const rescuer = await RescuerService.findFirst(req.query);
 
   let user = null;
-  if (adopter != null) user = {...adopter, role: 'Adopter'};
-  if (rescuer != null) user = {...rescuer, role: 'Rescuer'};
-  
+  if (adopter != null) user = { ...adopter.toJSON(), role: 'Adopter' };
+  if (rescuer != null) user = { ...rescuer.toJSON(), role: 'Rescuer' };
+
   // todo -> ver caso que llega null; 404
   return res.status(200).json(user);
 });
