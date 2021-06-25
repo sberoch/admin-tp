@@ -13,7 +13,7 @@ import AlertMessage from '../components/AlertMessage'
 import {Theme} from '../theme/appTheme'
 import api from '../network/axios'
 import { ThemeProvider } from '@material-ui/core/styles';
-
+import { HomeRedirection } from '../roles';
 
 const validationSchema = yup.object({
   email: yup
@@ -40,16 +40,7 @@ export default function LoginForm() {
         handleSubmit(values)
     },
   });
-
-  const RESCATISTA = 'Rescatista'
-  const ADOPTANTE = 'Adoptante'
-
-  const Redirections = {
-    Rescuer: '/homeRescuer',
-    Adopter: '/homeAdopter'
-  };
     
-
   const handleSubmit = (values) => {
     login(values.email, values.password).then(async (userCredential) => {
       const token = await userCredential.user.getIdToken(); 
@@ -60,18 +51,15 @@ export default function LoginForm() {
       });
 
       if (user == null)
-        throw `User with email ${values.email} not found`;
+        throw Error(`User with email ${values.email} not found`);
 
-
-      history.push(Redirections[user.data.role]);
+      history.push(HomeRedirection[user.data.role]);
     })
     .catch((error) => {
-      // var errorCode = error.code;
       var errorMessage = error.message;
       setMessageAlert(errorMessage)
       setOpenedAlert(true)
     });
-    
   }
 
 
