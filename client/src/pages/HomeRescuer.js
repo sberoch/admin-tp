@@ -16,24 +16,26 @@ export default function AddPet() {
 
   return(
     <ThemeProvider theme={Theme}>
-      <Grid container spacing={3} justify="center">
-          <Grid item xs={10} align="center">
-            <Typography variant="h2" color="secondary"> Rescue Me </Typography>
-          </Grid>
-          <Grid item xs={10} align="center">
-            <Typography variant="h5" color="black"> Home </Typography>
-          </Grid>
-          <Grid item xs={10} align="center">
-            <Button 
-              size="large"
-              color="primary" 
-              variant="contained"  
-              onClick={() => history.push('/addpet')}
-            >
-            Agregar mascota
-            </Button>
-          </Grid>
-      </Grid>
+      <div style={{ background: `url('${process.env.PUBLIC_URL}/dog_wallpaper.jpg')` }}>
+        <Grid container spacing={3} justify="center">
+            <Grid item xs={10} align="center">
+              <Typography variant="h2" color="secondary"> Rescue Me </Typography>
+            </Grid>
+            <Grid item xs={10} align="center">
+              <Typography variant="h5" color="black"> Home </Typography>
+            </Grid>
+            <Grid item xs={10} align="center">
+              <Button 
+                size="large"
+                color="primary" 
+                variant="contained"  
+                onClick={() => history.push('/addpet')}
+              >
+              Agregar mascota
+              </Button>
+            </Grid>
+        </Grid>
+      </div>
     </ThemeProvider>
   )
 }
