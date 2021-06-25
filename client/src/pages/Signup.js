@@ -67,7 +67,6 @@ export default function Signup() {
   }
 
   const handleSignup = async (data) => {
-
     try {
       const {email, name, birthdate, country, address, password, role} = data 
 
@@ -80,12 +79,18 @@ export default function Signup() {
           email, name, birthdate, country, address
         });
         history.push('/home')
-      } else {
+      } 
+      
+      if (role === ADOPTANTE) {
         await api.post(`/adopters`, {
           email, name, birthdate, country, address
         });
+        history.push('/home');
       }
-    } catch (error){
+
+      throw 'Role not found';
+
+    } catch (error) {
       console.log(error)
     }
   }

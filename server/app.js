@@ -41,9 +41,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+var usersRouter = require('./routes/user');
 var rescuerRoutes = require('./routes/rescuer');
 var adopterRoutes = require('./routes/adopter');
 
+app.use('/users', usersRouter);
 app.use('/rescuers', rescuerRoutes);
 app.use('/adopters', adopterRoutes);
 

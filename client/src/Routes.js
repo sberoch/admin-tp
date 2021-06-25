@@ -3,7 +3,8 @@ import Test from './components/Test'
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AddPet from "./pages/AddPet";
-import Home from "./pages/Home";
+import HomeRescuer from "./pages/HomeRescuer";
+import HomeAdopter from "./pages/HomeAdopter";
 
 function Routes() {
   return (
@@ -13,7 +14,9 @@ function Routes() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <PrivateRoute path="/addPet" component={AddPet} />
-        <PrivateRoute path="/home" component={Home} />
+        
+        <PrivateRoute path="/homeAdopter" component={HomeAdopter} />
+        <PrivateRoute path="/homeRescuer" component={HomeRescuer} />
       </Switch>
     </Router>
   );

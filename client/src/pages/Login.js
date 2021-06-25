@@ -11,6 +11,7 @@ import { useHistory } from "react-router";
 import { useAuth } from '../contexts/AuthContext'
 import AlertMessage from '../components/AlertMessage'
 import {Theme} from '../theme/appTheme'
+import api from '../network/axios'
 import { ThemeProvider } from '@material-ui/core/styles';
 
 
@@ -40,11 +41,29 @@ export default function LoginForm() {
     },
   });
 
+  const RESCATISTA = 'Rescatista'
+  const ADOPTANTE = 'Adoptante'
+
+  const Redirections = {
+    Rescuer: '/homeRescuer',
+    Adopter: '/homeAdopter'
+  };
+    
+
   const handleSubmit = (values) => {
     login(values.email, values.password).then(async (userCredential) => {
       const token = await userCredential.user.getIdToken(); 
       localStorage.setItem("token", token) // save id token in localStorage
-      history.push('/home')
+
+      var user = await api.get('/users', {
+        params: {email: values.email}
+      });
+
+      if (user == null)
+        throw `User with email ${values.email} not found`;
+
+
+      history.push(Redirections[user.data.role]);
     })
     .catch((error) => {
       // var errorCode = error.code;

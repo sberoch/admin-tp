@@ -7,10 +7,19 @@ function handleError(err) {
 class RescuerService {
   async findAll() {
     try {
-      const rescuers = await Rescuer.find({})
-      return rescuers
+      const rescuers = await Rescuer.find({});
+      return rescuers;
     } catch (err) {
       console.log(err)
+    }
+  }
+
+  async findFirst(query) {
+    try {
+      const adopter = await Rescuer.findOne(query);
+      return adopter;
+    } catch (err) {
+      handleError(err);
     }
   }
 
