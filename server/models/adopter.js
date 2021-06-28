@@ -21,6 +21,10 @@ const adopterSchema = mongoose.Schema({
     type: String,
     required: [true, 'Se requiere una direccion para el adoptante'],
   },
+  image_url: {
+    type: String,
+    required: [true, 'Se requiere una url para la imagen del adoptante']
+  }
 },
 { timestamps: true });
 

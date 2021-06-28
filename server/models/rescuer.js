@@ -21,6 +21,10 @@ const rescuerSchema = mongoose.Schema({
     type: String,
     required: [true, 'Se requiere una direccion para el rescatista'],
   },
+  image_url : {
+    type: String,
+    required: [true, 'Se requiere una url para la imagen del rescatista']
+  },
 },
 { timestamps: true });
 

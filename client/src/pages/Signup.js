@@ -13,6 +13,7 @@ import api from '../network/axios'
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
 import { useAuth } from '../contexts/AuthContext'
 import { ROLES, HomeRedirection, UserPostPath } from '../roles';
+import { storage } from '../config/firebase' 
 
 const validationSchema = yup.object({
   email: yup
@@ -64,20 +65,45 @@ export default function Signup() {
     setAvatar(e.target.files[0])
   }
 
+  const isRoleValid = (role) => {
+    return (role === ROLES.Rescuer || role === ROLES.Adopter);   
+  }
+
   const handleSignup = async (data) => {
     try {
       const {email, name, birthdate, country, address, password, role} = data 
-
-      const firebase_res = await signup(email, password); //login against firebase
-      const token = await firebase_res.user.getIdToken(); 
-      localStorage.setItem("token", token); //save id token in localStorage
   
-      await api.post(UserPostPath[role], {
-        email, name, birthdate, country, address
-      });
+      if (isRoleValid(role)) {
+        //Firebase
+        const firebase_res = await signup(email, password) //login against firebase
+        const token = await firebase_res.user.getIdToken(); 
 
-      history.push(HomeRedirection[role])
-    } catch (error) {
+        //save id token in localStorage
+        localStorage.setItem("token", token) 
+
+        const storageRef = storage.ref(`/images/${avatar.name}`);
+        let image_url; 
+
+        try {
+          await storageRef.put(avatar);
+          image_url = await storageRef.getDownloadURL();
+        } catch (err) {
+          console.log(err)
+        }
+
+        const user = { 
+          email, name, birthdate, country, address, image_url
+        }
+        
+        if (role === ROLES.Rescuer) {
+          await api.post(UserPostPath.Rescuer, user)
+          history.push('/')
+        } else if (role === ROLES.Adopter) {
+          await api.post(UserPostPath.Adopter, user)
+          history.push('/')
+        }
+      }
+    } catch (error){
       console.log(error)
     }
   }
