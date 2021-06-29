@@ -7,13 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-import {Theme} from '../theme/appTheme'
+import { Theme } from '../theme/appTheme'
 import { ThemeProvider } from '@material-ui/core/styles';
 import api from '../network/axios'
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
 import { useAuth } from '../contexts/AuthContext'
 import { ROLES, HomeRedirection, UserPostPath } from '../roles';
-import { storage } from '../config/firebase' 
+import { storage } from '../config/firebase'
 
 const validationSchema = yup.object({
   email: yup
@@ -66,23 +66,23 @@ export default function Signup() {
   }
 
   const isRoleValid = (role) => {
-    return (role === ROLES.Rescuer || role === ROLES.Adopter);   
+    return (role === ROLES.Rescuer || role === ROLES.Adopter);
   }
 
   const handleSignup = async (data) => {
     try {
-      const {email, name, birthdate, country, address, password, role} = data 
-  
+      const { email, name, birthdate, country, address, password, role } = data
+
       if (isRoleValid(role)) {
         //Firebase
         const firebase_res = await signup(email, password) //login against firebase
-        const token = await firebase_res.user.getIdToken(); 
+        const token = await firebase_res.user.getIdToken();
 
         //save id token in localStorage
-        localStorage.setItem("token", token) 
+        localStorage.setItem("token", token)
 
         const storageRef = storage.ref(`/images/${avatar.name}`);
-        let image_url; 
+        let image_url;
 
         try {
           await storageRef.put(avatar);
@@ -91,23 +91,23 @@ export default function Signup() {
           console.log(err)
         }
 
-        const user = { 
+        const user = {
           email, name, birthdate, country, address, image_url
         }
-        
+
         if (role === ROLES.Rescuer) {
           await api.post(UserPostPath.Rescuer, user)
-          history.push('/')
+          history.push('/homeRescuer')
         } else if (role === ROLES.Adopter) {
           await api.post(UserPostPath.Adopter, user)
-          history.push('/')
+          history.push('/homeAdopter')
         }
       }
-    } catch (error){
+    } catch (error) {
       console.log(error)
     }
   }
-  
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <ThemeProvider theme={Theme}>
@@ -199,11 +199,11 @@ export default function Signup() {
           </Grid>
           <Grid item xs={10}>
             <InputLabel
-                style={{ disableAnimation: false }}
-                disableAnimation={false}
-                htmlFor="searchCriteria"
-              >
-                Elija su rol dentro de la aplicación
+              style={{ disableAnimation: false }}
+              disableAnimation={false}
+              htmlFor="searchCriteria"
+            >
+              Elija su rol dentro de la aplicación
             </InputLabel>
             <Select
               fullWidth
@@ -221,7 +221,7 @@ export default function Signup() {
             </Select>
           </Grid>
 
-          {avatar && <Grid item xs={10} style={{textAlign: "center"}}>
+          {avatar && <Grid item xs={10} style={{ textAlign: "center" }}>
             <img src={URL.createObjectURL(avatar)} width="200" height="200" alt="" />
           </Grid>}
           <Grid item xs={10}>
@@ -230,7 +230,7 @@ export default function Signup() {
               component="label"
               fullWidth
             >
-              {avatar ? avatar.name : 'Selecciona tu foto de perfil'} 
+              {avatar ? avatar.name : 'Selecciona tu foto de perfil'}
               <input
                 type="file"
                 hidden
@@ -239,19 +239,19 @@ export default function Signup() {
             </Button>
           </Grid>
           <Grid item xs={10}>
-            <Button 
+            <Button
               size="large"
-              color="primary" 
-              variant="contained" 
-              fullWidth 
+              color="primary"
+              variant="contained"
+              fullWidth
               type="submit"
             >
-            Registrarme
+              Registrarme
             </Button>
           </Grid>
           <Grid item xs={10}>
-            <Link to='/login' style={{textDecoration: 'none'}}>
-              <Button color="secondary" style={{textTransform: 'none'}}>
+            <Link to='/login' style={{ textDecoration: 'none' }}>
+              <Button color="secondary" style={{ textTransform: 'none' }}>
                 ¿Ya tenes una cuenta? Ingresar
               </Button>
             </Link>

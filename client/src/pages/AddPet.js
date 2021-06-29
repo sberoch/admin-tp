@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { useHistory } from "react-router";
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
 import api from '../network/axios'
-import {Theme} from '../theme/appTheme'
+import { Theme } from '../theme/appTheme'
 import { ThemeProvider } from '@material-ui/core/styles';
 
 const validationSchema = yup.object({
@@ -18,16 +18,20 @@ const validationSchema = yup.object({
   species: yup
     .string('Ingresa la especie de la mascota')
     .required('Se requiere una especie'),
+  age: yup
+    .number('Ingresa la edad de esta mascota')
+    .required('Se requiere la edad de la mascota')
 });
 
 export default function AddPet() {
-  
+
   const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
       name: '',
       species: '',
+      age: 0,
       description: '',
     },
     validationSchema: validationSchema,
@@ -35,15 +39,11 @@ export default function AddPet() {
       handleSubmit(values)
     },
   });
-  
+
   const handleSubmit = async (data) => {
-
-    const {name, species, description} = data
-
     try {
-      const res = await api.post(`/pets`, {name, species, description})
-      console.log(res)
-      history.push('/home')
+      const res = await api.post(`/pets`, { ...data, image_url: "asd" })
+      history.push('/homeRescuer')
     } catch {
       console.log("Error")
     }
@@ -74,11 +74,11 @@ export default function AddPet() {
           </Grid>
           <Grid item xs={10}>
             <InputLabel
-                style={{ disableAnimation: false, margin: 10}}
-                disableAnimation={false}
-                htmlFor="searchCriteria"
-              >
-                Especie de la mascota
+              style={{ disableAnimation: false, margin: 10 }}
+              disableAnimation={false}
+              htmlFor="searchCriteria"
+            >
+              Especie de la mascota
             </InputLabel>
             <Select
               fullWidth
@@ -111,25 +111,39 @@ export default function AddPet() {
           </Grid>
 
           <Grid item xs={10}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              id="age"
+              name="age"
+              label="Edad"
+              value={formik.values.age}
+              onChange={formik.handleChange}
+              error={formik.touched.age && Boolean(formik.errors.age)}
+              helperText={formik.touched.age && formik.errors.age}
+            />
+          </Grid>
+
+          <Grid item xs={10}>
             <Grid container spacing={3} justify="center">
               <Grid item>
-                <Button 
+                <Button
                   size="large"
-                  color="primary" 
-                  variant="contained" 
+                  color="primary"
+                  variant="contained"
                   type="submit"
                 >
-                Confirmar
-                </Button>             
+                  Confirmar
+                </Button>
               </Grid>
               <Grid item>
-                <Button 
+                <Button
                   size="large"
-                  color="secondary" 
-                  variant="contained" 
+                  color="secondary"
+                  variant="contained"
                   onClick={() => history.push('/home')}
                 >
-                Cancelar
+                  Cancelar
                 </Button>
               </Grid>
             </Grid>
