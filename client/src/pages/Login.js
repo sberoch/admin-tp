@@ -14,6 +14,7 @@ import {Theme} from '../theme/appTheme'
 import api from '../network/axios'
 import { ThemeProvider } from '@material-ui/core/styles';
 import { HomeRedirection } from '../roles';
+import logo from '../assets/logo.png'
 
 const validationSchema = yup.object({
   email: yup
@@ -69,6 +70,7 @@ export default function LoginForm() {
         <AlertMessage open={openedAlert} setOpen={setOpenedAlert} message={messageAlert} severity="error"/>
         <Grid container spacing={3} justify="center">
           <Grid item xs={7} align="center">
+          <img src={logo} alt="Logo" style={{height: 120, width: 120, marginLeft: 10}}/>
             <Typography variant="h2" color="secondary">Rescue Me</Typography>
           </Grid>
           <Grid item xs={7}>
