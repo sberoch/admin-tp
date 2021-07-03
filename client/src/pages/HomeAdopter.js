@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -6,8 +6,17 @@ import Grid from '@material-ui/core/Grid';
 import {Theme} from '../theme/appTheme'
 import { ThemeProvider } from '@material-ui/core/styles';
 import logo from '../assets/logo.png'
+import TitlebarGridList from '../components/PetsViewer'
+import api from '../network/axios'
 
 export default function AddPet() {
+
+  const [pets, setPets] = useState([])
+
+  useEffect( async () => {
+    let pets = await api.get('/pets')
+    setPets(pets.data)
+  }, [])
   
   //const history = useHistory();
 
@@ -21,6 +30,7 @@ export default function AddPet() {
           <Grid item xs={10} align="center">
             <Typography variant="h5" color="black"> Home </Typography>
           </Grid>
+          {pets.length!=0&&<TitlebarGridList pets={pets}/>}
           <Grid item xs={10} align="center">
             <Button 
               size="large"

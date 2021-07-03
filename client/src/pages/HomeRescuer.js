@@ -6,6 +6,7 @@ import { useHistory } from "react-router";
 import {Theme} from '../theme/appTheme'
 import { ThemeProvider } from '@material-ui/core/styles';
 import logo from '../assets/logo.png'
+import TitlebarGridList from '../components/PetsViewer'
 
 export default function AddPet() {
   
@@ -23,6 +24,7 @@ export default function AddPet() {
             <Grid item xs={10} align="center">
               <Typography variant="h5" color="black"> Home </Typography>
             </Grid>
+            <TitlebarGridList/>
             <Grid item xs={10} align="center">
               <Button 
                 size="large"
