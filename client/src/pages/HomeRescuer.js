@@ -13,7 +13,8 @@ export default function AddPet() {
 
   return(
     <ThemeProvider theme={Theme}>
-      <div style={{ background: `url('${process.env.PUBLIC_URL}/dog_wallpaper.jpg')` }}>
+      
+      {/* <div style={{ background: `url('${process.env.PUBLIC_URL}/dog_wallpaper.jpg')` }}> */}
       <img src={logo} alt="Logo" style={{height: 120, width: 120, marginLeft: 10}}/>
         <Grid container spacing={3} justify="center">
             <Grid item xs={10} align="center">
@@ -33,7 +34,7 @@ export default function AddPet() {
               </Button>
             </Grid>
         </Grid>
-      </div>
+      {/* </div> */}
     </ThemeProvider>
   )
 }
