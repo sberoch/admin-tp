@@ -98,10 +98,10 @@ export default function Signup() {
 
         if (role === ROLES.Rescuer) {
           await api.post(UserPostPath.Rescuer, user)
-          history.push('/homeRescuer')
+          history.push(HomeRedirection.Rescuer)
         } else if (role === ROLES.Adopter) {
           await api.post(UserPostPath.Adopter, user)
-          history.push('/homeAdopter')
+          history.push(HomeRedirection.Adopter)
         }
       }
     } catch (error) {

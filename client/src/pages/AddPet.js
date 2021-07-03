@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@material-ui/core/Button';
@@ -11,6 +11,8 @@ import api from '../network/axios'
 import { Theme } from '../theme/appTheme'
 import { ThemeProvider } from '@material-ui/core/styles';
 import logo from '../assets/logo.png'
+import { HomeRedirection, UserPostPath } from '../roles';
+import { storage } from '../config/firebase'
 
 const validationSchema = yup.object({
   name: yup
@@ -27,6 +29,7 @@ const validationSchema = yup.object({
 export default function AddPet() {
 
   const history = useHistory();
+  const [avatar, setAvatar] = useState()
 
   const formik = useFormik({
     initialValues: {
@@ -41,12 +44,23 @@ export default function AddPet() {
     },
   });
 
+  const handleFileSelection = (e) => {
+    setAvatar(e.target.files[0])
+  }
+
   const handleSubmit = async (data) => {
     try {
-      const res = await api.post(`/pets`, { ...data, image_url: "asd" })
-      history.push('/homeRescuer')
-    } catch {
-      console.log("Error")
+      const storageRef = storage.ref(`/pets/${avatar.name}`);
+      let image_url;
+
+      await storageRef.put(avatar);
+      image_url = await storageRef.getDownloadURL();
+      const pet = { ...data, image_url }
+      const res = await api.post(UserPostPath.Pets, pet)
+
+      history.push(HomeRedirection.Rescuer)
+    } catch (err){
+      console.log(err)
     }
   }
 
@@ -124,6 +138,24 @@ export default function AddPet() {
               error={formik.touched.age && Boolean(formik.errors.age)}
               helperText={formik.touched.age && formik.errors.age}
             />
+          </Grid>
+
+          {avatar && <Grid item xs={10} style={{ textAlign: "center" }}>
+            <img src={URL.createObjectURL(avatar)} width="200" height="200" alt="" />
+          </Grid>}
+          <Grid item xs={10}>
+            <Button
+              variant="outlined"
+              component="label"
+              fullWidth
+            >
+              {avatar ? avatar.name : 'Selecciona foto del animal'}
+              <input
+                type="file"
+                hidden
+                onChange={handleFileSelection}
+              />
+            </Button>
           </Grid>
 
           <Grid item xs={10}>

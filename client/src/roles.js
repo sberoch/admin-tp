@@ -5,7 +5,8 @@ const ROLES = {
 
 const UserPostPath = {
     Rescuer: '/rescuers',
-    Adopter: '/adopters' 
+    Adopter: '/adopters',
+    Pets: '/pets' 
 };
 
 const HomeRedirection = {
