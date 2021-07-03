@@ -21,12 +21,16 @@ const rescuerSchema = mongoose.Schema({
     type: String,
     required: [true, 'Se requiere una direccion para el rescatista'],
   },
-  image_url : {
+  image_url: {
     type: String,
     required: [true, 'Se requiere una url para la imagen del rescatista']
   },
+  pets: [{
+    type: mongoose.ObjectId,
+    ref: 'Pet'
+  }]
 },
-{ timestamps: true });
+  { timestamps: true });
 
 const Rescuer = mongoose.model('Rescuer', rescuerSchema)
 

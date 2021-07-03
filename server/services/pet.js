@@ -1,13 +1,15 @@
-const { Pet } = require('../models')
+const { Pet } = require('../models');
+const { buildQuery } = require('./queries/pet');
 
 function handleError(err) {
   console.log(err);
 }
 
 class PetService {
-  async findAll() {
+  async findAll(filter) {
+    const query = buildQuery(filter)
     try {
-      const pets = await Pet.find({})
+      const pets = await Pet.find(query)
       return pets
     } catch (err) {
       console.log(err)

@@ -21,9 +21,20 @@ const petSchema = mongoose.Schema({
   },
   description: {
     type: String,
+  },
+  rescuer: {
+    type: mongoose.ObjectId,
+    ref: 'Rescuer',
   }
 },
   { timestamps: true });
+
+petSchema.post('save', async function (doc) {
+  await mongoose.model('Rescuer').updateOne(
+    { _id: doc.rescuer },
+    { $push: { pets: doc._id } }
+  )
+})
 
 const Pet = mongoose.model('Pet', petSchema)
 

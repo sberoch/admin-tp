@@ -1,13 +1,15 @@
-const { Adopter } = require('../models')
+const { Adopter } = require('../models');
+const { buildQuery } = require('./queries/adopter');
 
 function handleError(err) {
   console.log(err);
 }
 
 class AdopterService {
-  async findAll() {
+  async findAll(filter) {
+    const query = buildQuery(filter)
     try {
-      const adopters = await Adopter.find({});
+      const adopters = await Adopter.find(query);
       return adopters;
     } catch (err) {
       handleError(err);

@@ -1,13 +1,16 @@
-const { Rescuer } = require('../models')
+const { Rescuer } = require('../models');
+const { buildQuery } = require('./queries/rescuer');
 
 function handleError(err) {
   console.log(err);
 }
 
 class RescuerService {
-  async findAll() {
+  async findAll(filter) {
+    const query = buildQuery(filter)
     try {
-      const rescuers = await Rescuer.find({});
+      const rescuers = await Rescuer.find(query)
+        .select('-pets');
       return rescuers;
     } catch (err) {
       console.log(err)
