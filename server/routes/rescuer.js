@@ -20,7 +20,7 @@ router.post('/', async (req, res, next) => {
   try {
     const rescuer = await RescuerService.create(rescuerDTO)
     res.status(201).json(rescuer)
-  } catch(err) {
+  } catch (err) {
     next(createError(400, err.message))
   }
 });
