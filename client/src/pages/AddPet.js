@@ -29,7 +29,7 @@ const validationSchema = yup.object({
 export default function AddPet() {
 
   const history = useHistory();
-  const [avatar, setAvatar] = useState(0)
+  const [avatar, setAvatar] = useState()
 
   const formik = useFormik({
     initialValues: {
