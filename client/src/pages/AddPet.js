@@ -55,7 +55,7 @@ export default function AddPet() {
 
       await storageRef.put(avatar);
       image_url = await storageRef.getDownloadURL();
-      const pet = { ...data, image_url }
+      const pet = { ...data, image_url, rescuer:localStorage.getItem('id') }
       const res = await api.post(UserPostPath.Pets, pet)
 
       history.push(HomeRedirection.Rescuer)

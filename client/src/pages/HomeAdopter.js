@@ -27,19 +27,17 @@ export default function AddPet() {
           <Grid item xs={10} align="center">
             <Typography variant="h2" color="secondary"> Rescue Me </Typography>
           </Grid>
+
+          {<TitlebarGridList pets={pets}/>}
           <Grid item xs={10} align="center">
-            <Typography variant="h5" color="black"> Home </Typography>
-          </Grid>
-          {pets.length!=0&&<TitlebarGridList pets={pets}/>}
-          <Grid item xs={10} align="center">
-            <Button 
+            {/* <Button 
               size="large"
               color="primary" 
               variant="contained"  
               onClick={() => false}
             >
             Ver mascotas
-            </Button>
+            </Button> */}
           </Grid>
       </Grid>
     </ThemeProvider>

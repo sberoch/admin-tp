@@ -50,9 +50,11 @@ export default function LoginForm() {
       var user = await api.get('/users', {
         params: {email: values.email}
       });
-
+      
       if (user == null)
         throw Error(`User with email ${values.email} not found`);
+      
+      localStorage.setItem("id", user.data._id)
 
       history.push(HomeRedirection[user.data.role]);
     })

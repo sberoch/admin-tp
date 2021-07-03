@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -7,11 +7,19 @@ import {Theme} from '../theme/appTheme'
 import { ThemeProvider } from '@material-ui/core/styles';
 import logo from '../assets/logo.png'
 import TitlebarGridList from '../components/PetsViewer'
+import api from '../network/axios'
 
 export default function AddPet() {
   
   const history = useHistory();
 
+  const [pets, setPets] = useState([])
+
+  useEffect( async () => {
+    let pets = await api.get('/pets', {params:{rescuer:localStorage.getItem('id')}})
+    setPets(pets.data)
+  }, [])
+  
   return(
     <ThemeProvider theme={Theme}>
       
@@ -21,10 +29,8 @@ export default function AddPet() {
             <Grid item xs={10} align="center">
               <Typography variant="h2" color="secondary"> Rescue Me </Typography>
             </Grid>
-            <Grid item xs={10} align="center">
-              <Typography variant="h5" color="black"> Home </Typography>
-            </Grid>
-            <TitlebarGridList/>
+
+            {<TitlebarGridList pets={pets}/>}
             <Grid item xs={10} align="center">
               <Button 
                 size="large"
