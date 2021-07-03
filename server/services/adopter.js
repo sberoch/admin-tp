@@ -34,6 +34,15 @@ class AdopterService {
     }
   }
 
+  async findByEmail(email) {
+    try {
+      const adopter = await Adopter.findOne({ email: email })
+      return adopter
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
   async create(adopterDTO) {
     try {
       const adopter = await Adopter.create(adopterDTO);

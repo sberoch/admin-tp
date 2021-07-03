@@ -16,5 +16,18 @@ router.get('/', async (req, res, next) => {
   return res.status(200).json(user);
 });
 
+router.get('/:email', async (req, res, next) => {
+  const adopter = await AdopterService.findByEmail(req.params.email)
+  const rescuer = await RescuerService.findByEmail(req.params.email)
+
+  if (adopter !== null) {
+    return res.status(200).json({ id: adopter._id })
+  }
+  if (rescuer !== null) {
+    return res.status(200).json({ id: rescuer._id })
+  }
+  return res.status(400).json({ message: 'No se encontro el usuario' })
+});
+
 
 module.exports = router;

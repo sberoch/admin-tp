@@ -19,8 +19,17 @@ class RescuerService {
 
   async findFirst(query) {
     try {
-      const adopter = await Rescuer.findOne(query);
-      return adopter;
+      const rescuer = await Rescuer.findOne(query);
+      return rescuer;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  async findByEmail(email) {
+    try {
+      const rescuer = await Rescuer.findOne({ email: email })
+      return rescuer
     } catch (err) {
       handleError(err);
     }
