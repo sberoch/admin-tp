@@ -82,16 +82,15 @@ export default function LoginForm() {
       const token = await userCredential.user.getIdToken(); 
       localStorage.setItem("token", token) // save id token in localStorage
 
-      var user = await api.get('/users', {
-        params: {email: values.email}
-      });
+      //var user = await api.get('/users', {
+      //  params: {email: values.email}
+      //});
       
-      if (user == null)
-        throw Error(`User with email ${values.email} not found`);
+      //if (user == null)
+      //  throw Error(`User with email ${values.email} not found`);
       
       localStorage.setItem("id", user.data._id)
-
-      history.push(HomeRedirection[user.data.role]);
+      history.push('home');
     })
     .catch((error) => {
       var errorMessage = error.message;

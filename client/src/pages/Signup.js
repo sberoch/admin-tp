@@ -99,11 +99,11 @@ export default function Signup() {
         if (role === ROLES.Rescuer) {
           const rescuer = await api.post(UserPostPath.Rescuer, user)
           localStorage.setItem('id', rescuer.data._id)
-          history.push(HomeRedirection.Rescuer)
+          history.push('home')
         } else if (role === ROLES.Adopter) {
           const adopter = await api.post(UserPostPath.Adopter, user)
           localStorage.setItem('id', adopter.data._id)
-          history.push(HomeRedirection.Adopter)
+          history.push('home')
         }
       }
     } catch (error) {
