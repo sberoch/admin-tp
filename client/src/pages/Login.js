@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    
     backgroundImage: 'url(https://source.unsplash.com/ISg37AI2A-s)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
@@ -119,7 +118,7 @@ export default function LoginForm() {
               <Grid container spacing={3} justify="center">
                 <Grid item xs={7} align="center">
                 <img src={logo} alt="Logo" style={{height: 120, width: 120, marginLeft: 10}}/>
-                  <Typography variant="h2" color="secondary">Rescue Me</Typography>
+                <Typography variant="h2" color="secondary">Rescue Me</Typography>
                 </Grid>
                 <Grid item xs={7}>
                   <TextField
