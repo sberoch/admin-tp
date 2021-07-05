@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-//import { useHistory } from "react-router";
 import {Theme} from '../theme/appTheme'
 import { ThemeProvider } from '@material-ui/core/styles';
 import TopBar from '../components/TopBar';
@@ -15,9 +14,7 @@ export default function AddPet() {
   useEffect( async () => {
     let pets = await api.get('/pets')
     setPets(pets.data)
-  }, [])
-  
-  //const history = useHistory();
+  }, []);
 
   return(
     <ThemeProvider theme={Theme}>
