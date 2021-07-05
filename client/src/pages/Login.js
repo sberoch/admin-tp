@@ -14,7 +14,40 @@ import {Theme} from '../theme/appTheme'
 import api from '../network/axios'
 import { ThemeProvider } from '@material-ui/core/styles';
 import { HomeRedirection } from '../roles';
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { makeStyles } from '@material-ui/core/styles';
 import logo from '../assets/logo.png'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100vh',
+  },
+  image: {
+    
+    backgroundImage: 'url(https://source.unsplash.com/ISg37AI2A-s)',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor:
+      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 const validationSchema = yup.object({
   email: yup
@@ -27,10 +60,13 @@ const validationSchema = yup.object({
 });
 
 export default function LoginForm() {
-  const { login } = useAuth()
+  const { login } = useAuth();
   const [ openedAlert, setOpenedAlert ] = useState(false)
   const [ messageAlert, setMessageAlert ] = useState("")
+
+  const classes = useStyles();
   const history = useHistory();
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -65,68 +101,81 @@ export default function LoginForm() {
     });
   }
 
-
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <ThemeProvider theme={Theme}>
-        <AlertMessage open={openedAlert} setOpen={setOpenedAlert} message={messageAlert} severity="error"/>
-        <Grid container spacing={3} justify="center">
-          <Grid item xs={7} align="center">
-          <img src={logo} alt="Logo" style={{height: 120, width: 120, marginLeft: 10}}/>
-            <Typography variant="h2" color="secondary">Rescue Me</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              id="email"
-              name="email"
-              label="Email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
-            />
-          </Grid>
-          <Grid item xs={7}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              id="password"
-              name="password"
-              label="Contraseña"
-              type="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-            />
-          </Grid>
-          <Grid item xs={7}>
-            <Button 
-              size="large"
-              color='primary'
-              variant="contained" 
-              fullWidth 
-              type="submit"
-            >
-            Conectarme
-            </Button>
-            
-          </Grid>
-          <Grid item xs={7}>
-            <Divider />
-          </Grid>
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form onSubmit={formik.handleSubmit}>
+            <ThemeProvider theme={Theme}>
+              <AlertMessage open={openedAlert} setOpen={setOpenedAlert} message={messageAlert} severity="error"/>
+              <Grid container spacing={3} justify="center">
+                <Grid item xs={7} align="center">
+                <img src={logo} alt="Logo" style={{height: 120, width: 120, marginLeft: 10}}/>
+                  <Typography variant="h2" color="secondary">Rescue Me</Typography>
+                </Grid>
+                <Grid item xs={7}>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    id="email"
+                    name="email"
+                    label="Email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                  />
+                </Grid>
+                <Grid item xs={7}>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    id="password"
+                    name="password"
+                    label="Contraseña"
+                    type="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
+                  />
+                </Grid>
+                <Grid item xs={7}>
+                  <Button 
+                    size="large"
+                    color='primary'
+                    variant="contained" 
+                    fullWidth 
+                    type="submit"
+                  >
+                  Conectarme
+                  </Button>  
+                </Grid>
 
-          <Grid item xs={7}>
-            <Link to='/signup' style={{textDecoration: 'none'}}>
-              <Button color="secondary" style={{textTransform: 'none'}}>
-                ¿No tenes cuenta? Registrarse
-              </Button>
-            </Link>
-          </Grid>
-        </Grid>
-      </ThemeProvider>
-    </form>
-  )
+                <Grid item xs={7}>
+                  <Divider />
+                </Grid>
+
+                <Grid item xs={7}>
+                  <Link to='/signup' style={{textDecoration: 'none'}}>
+                    <Button color="secondary" style={{textTransform: 'none'}}>
+                      ¿No tenes cuenta? Registrarse
+                    </Button>
+                  </Link>
+                </Grid>
+              </Grid>
+            </ThemeProvider>
+          </form>
+        </div>
+      </Grid>
+    </Grid>
+  );
 }
