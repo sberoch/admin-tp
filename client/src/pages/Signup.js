@@ -151,7 +151,7 @@ export default function Signup() {
               variant="outlined"
               type="date"
               InputLabelProps={{ shrink: true }}
-              inputProps={{ min: "2019-01-24", max: "2020-05-31" }}
+              inputProps={{ min: "1900-01-01", max: new Date().toISOString().slice(0, 10) }}
               id="birthdate"
               name="birthdate"
               label="Fecha de nacimiento"

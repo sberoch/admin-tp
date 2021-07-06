@@ -18,7 +18,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Rescue Me
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -101,10 +101,10 @@ export default function Home() {
         {/* Footer */}
         <footer className={classes.footer}>
           <Typography variant="h6" align="center" gutterBottom>
-            Footer
+            Rescue Me
           </Typography>
           <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-            Aca deberia ir un slogan  nashee!
+            ¡Dale una mano a una pata!
           </Typography>
           <Copyright />
         </footer>
