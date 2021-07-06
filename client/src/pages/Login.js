@@ -13,7 +13,6 @@ import AlertMessage from '../components/AlertMessage'
 import {Theme} from '../theme/appTheme'
 import api from '../network/axios'
 import { ThemeProvider } from '@material-ui/core/styles';
-import { HomeRedirection } from '../roles';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -82,12 +81,12 @@ export default function LoginForm() {
       const token = await userCredential.user.getIdToken(); 
       localStorage.setItem("token", token) // save id token in localStorage
 
-      //var user = await api.get('/users', {
-      //  params: {email: values.email}
-      //});
+      var user = await api.get('/users', {
+        params: {email: values.email}
+      });
       
-      //if (user == null)
-      //  throw Error(`User with email ${values.email} not found`);
+      if (user == null)
+        throw Error(`User with email ${values.email} not found`);
       
       localStorage.setItem("id", user.data._id)
       history.push('home');
