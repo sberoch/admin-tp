@@ -50,7 +50,7 @@ export default function Signup() {
       country: '',
       address: '',
       password: '',
-      role: ''
+      role: ROLES.Adopter
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -201,30 +201,6 @@ export default function Signup() {
               helperText={formik.touched.address && formik.errors.address}
             />
           </Grid>
-          <Grid item xs={10}>
-            <InputLabel
-              style={{ disableAnimation: false }}
-              disableAnimation={false}
-              htmlFor="searchCriteria"
-            >
-              Elija su rol dentro de la aplicación
-            </InputLabel>
-            <Select
-              fullWidth
-              variant="outlined"
-              id="role"
-              name="role"
-              label="Rol"
-              value={formik.values.role}
-              onChange={formik.handleChange}
-              error={formik.touched.role && Boolean(formik.errors.role)}
-              helperText={formik.touched.role && formik.errors.role}
-            >
-              <MenuItem value={ROLES.Adopter}>Adoptante</MenuItem>
-              <MenuItem value={ROLES.Rescuer}>Rescatista</MenuItem>
-            </Select>
-          </Grid>
-
           {avatar && <Grid item xs={10} style={{ textAlign: "center" }}>
             <img src={URL.createObjectURL(avatar)} width="200" height="200" alt="" />
           </Grid>}

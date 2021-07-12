@@ -84,12 +84,12 @@ export default function Home() {
               <div className={classes.buttons}>
                 <Grid container spacing={2} justify="center">
                   <Grid item>
-                    <Button variant="contained" color="primary" onClick={goToRescuerHome}>
+                    <Button variant="contained" color="primary" onClick={goToAdopterHome}>
                       <Favorite className={classes.icon} /> Adoptante
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button variant="outlined" color="primary" onClick={goToAdopterHome}>
+                    <Button variant="outlined" color="primary" onClick={goToRescuerHome}>
                       <Pets className={classes.icon} /> Rescatista
                     </Button>
                   </Grid>
